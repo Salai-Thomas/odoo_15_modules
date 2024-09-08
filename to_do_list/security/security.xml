@@ -6,4 +6,11 @@
         <field name="name">User</field>
         <field name="category_id" ref="todo_list_module_management"/>
     </record>
+
+    <record id="user_perm_rule" model="ir.rule">
+        <field name="name">User Can Read Records That Created Records</field>
+        <field ref="model_todo_item" name="model_id"/>
+        <field name="domain_force">[('create_uid', '=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_to_do_item'))]"/>
+    </record>
 </odoo>
