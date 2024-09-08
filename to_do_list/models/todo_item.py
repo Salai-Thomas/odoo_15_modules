@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models,api
 
 class TodoItem(models.Model):
     _name = 'todo.item'
@@ -14,3 +14,16 @@ class TodoItem(models.Model):
                 record.label_done = 'Done'
             else:
                 record.label_done = 'Not Done'
+
+
+    @api.model
+    def create(self, vals):
+        partner_id = self.env.user.partner_id.id
+        if 'work_team_ids' in vals:
+            # Add the current user's partner if it's not already in the list
+            vals['work_team_ids'].append((4, partner_id))
+        else:
+            # If 'work_team_ids' is not present, create it and add the current user's partner
+            vals['work_team_ids'] = [(4, partner_id)]
+
+        return super(TodoItem, self).create(vals)

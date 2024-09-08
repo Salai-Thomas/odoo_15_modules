@@ -2,6 +2,7 @@
     <record model="ir.module.category" id="todo_list_module_management">
         <field name="name">To Do List</field>
     </record>
+
     <record id="group_to_do_item" model="res.groups">
         <field name="name">User</field>
         <field name="category_id" ref="todo_list_module_management"/>
@@ -10,7 +11,20 @@
     <record id="user_perm_rule" model="ir.rule">
         <field name="name">User Can Read Records That Created Records</field>
         <field ref="model_todo_item" name="model_id"/>
-        <field name="domain_force">[('create_uid', '=',user.id)]</field>
+        <field name="domain_force">[('work_team_ids', 'in', user.partner_id.id)]</field>
         <field name="groups" eval="[(4, ref('group_to_do_item'))]"/>
+    </record>
+
+    <record id="group_to_do_admin" model="res.groups">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="todo_list_module_management"/>
+        <field name="implied_ids" eval="[(4, ref('group_to_do_item'))]"/>
+    </record>
+
+    <record id="admin_perm_rule" model="ir.rule">
+        <field name="name">Admin Can Read Records All Records</field>
+        <field ref="model_todo_item" name="model_id"/>
+        <field name="domain_force">[(1, '=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_to_do_admin'))]"/>
     </record>
 </odoo>
