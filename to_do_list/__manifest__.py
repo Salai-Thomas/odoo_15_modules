@@ -2,8 +2,10 @@
 {
     'name': "To Do List",
     'author': "Salai Thomas",
+    'summary':'Purpose For Training',
     'category': 'Uncategorized',
     'version': '15.0',
+    'License': 'LGPL-3',
 
     'depends': ['base','contacts'],
 
